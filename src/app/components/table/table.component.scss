@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  margin-top: 40px;
+}
+.active {
+  color: #25b553;
+}
+.blocked {
+  color: #ff001f;
+}
+
+tr[mat-header-row] {
+  background-color: #da2032;
+
+  th {
+    color: #ffffff;
+  }
+}

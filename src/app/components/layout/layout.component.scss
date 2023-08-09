@@ -1,0 +1,41 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+mat-drawer-container {
+  flex: 1;
+}
+mat-drawer {
+  width: 263px;
+  background-color: #666f78;
+}
+mat-drawer-content {
+  background-color: #f5f6f7;
+}
+.inner {
+  margin-left: 25px;
+  margin-right: 35px;
+}
+
+h1 {
+  color: black;
+  font-weight: 500;
+}
+.btn-list {
+  display: flex;
+  button {
+    background-color: #da2032;
+    font-size: 10px;
+    margin-left: 15px;
+    color: #ffffff;
+  }
+  button:first-child {
+    margin-left: 0;
+  }
+
+  button:last-child {
+    background-color: grey;
+    margin-left: auto;
+  }
+}
