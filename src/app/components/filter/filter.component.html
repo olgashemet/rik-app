@@ -16,7 +16,12 @@
       <div class="item-wrap">
         <label for="phone">Телефон</label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="phone" id="phone" />
+          <input
+            matInput
+            formControlName="phone"
+            id="phone"
+            (input)="trimValue('phone')"
+          />
         </mat-form-field>
       </div>
       <div class="item-wrap">
@@ -47,7 +52,12 @@
       <div class="item-wrap">
         <label for="email">Email</label>
         <mat-form-field appearance="outline">
-          <input matInput formControlName="email" id="email" />
+          <input
+            matInput
+            formControlName="email"
+            id="email"
+            (input)="trimValue('email')"
+          />
         </mat-form-field>
       </div>
       <div class="item-wrap">
