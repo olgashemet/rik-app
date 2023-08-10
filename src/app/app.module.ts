@@ -1,5 +1,8 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,12 +20,25 @@ import { FilterComponent } from './components/filter/filter.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { TableComponent } from './components/table/table.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  MAT_DATE_FORMATS,
+  DateAdapter,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +65,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,51 +1,80 @@
 <div class="wrapper">
   <h3>Фильтр</h3>
   <form [formGroup]="form" (ngSubmit)="submitForm()">
-    <div class="field-wrap">
-      <mat-form-field>
-        <mat-label>Логин</mat-label>
-        <input matInput formControlName="name" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Телефон</mat-label>
-        <input matInput formControlName="phone" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Дата создания</mat-label>
-        <input matInput [matDatepicker]="create" formControlName="create_at" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="create"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #create></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Статус</mat-label>
-        <mat-select formControlName="status">
-          <mat-option value="ACTIVE">Active</mat-option>
-          <mat-option value="blocked">Blocked</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Роль</mat-label>
-        <mat-select formControlName="is_admin">
-          <mat-option [value]="true">Admin</mat-option>
-          <mat-option [value]="false">User</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Дата изменения</mat-label>
-        <input matInput [matDatepicker]="change" formControlName="update_at" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="change"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #change></mat-datepicker>
-      </mat-form-field>
+    <div class="fields-wrap">
+      <div class="item-wrap">
+        <label for="login">Логин</label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            formControlName="name"
+            id="login"
+            (input)="trimValue('name')"
+          />
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="phone">Телефон</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="phone" id="phone" />
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="create_date">Дата создания</label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [matDatepicker]="create"
+            formControlName="create_at"
+            id="create_date"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="create"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #create></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="status">Статус</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="status" id="status">
+            <mat-option value="ACTIVE">Active</mat-option>
+            <mat-option value="blocked">Blocked</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="email">Email</label>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="email" id="email" />
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="role">Роль</label>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="is_admin" id="role">
+            <mat-option [value]="true">Admin</mat-option>
+            <mat-option [value]="false">User</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="item-wrap">
+        <label for="change_date">Дата изменения</label>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [matDatepicker]="change"
+            formControlName="update_at"
+            id="change_date"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="change"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #change></mat-datepicker>
+        </mat-form-field>
+      </div>
     </div>
     <div class="btn-list">
       <button mat-button type="submit" [disabled]="!form.dirty">

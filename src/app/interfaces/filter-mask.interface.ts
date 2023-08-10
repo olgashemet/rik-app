@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export interface FilterMask {
   create_at: Date;
   email: string;
@@ -6,4 +8,14 @@ export interface FilterMask {
   phone: number;
   status: string;
   update_at: Date;
+}
+
+export interface FilterMaskForm {
+  create_at: FormControl;
+  email: FormControl<string>;
+  is_admin: boolean;
+  name: FormControl<string>;
+  phone: FormControl<number>;
+  status: string;
+  update_at: FormControl;
 }

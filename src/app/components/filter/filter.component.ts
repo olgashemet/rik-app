@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { FilterMask } from 'src/app/interfaces/filter-mask.interface';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FilterMask,
+  FilterMaskForm,
+} from 'src/app/interfaces/filter-mask.interface';
 import { CommunicationService } from 'src/app/services/comm.service';
 
 @Component({
@@ -9,20 +12,37 @@ import { CommunicationService } from 'src/app/services/comm.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
-  constructor(
-    private commService: CommunicationService,
-    private fb: FormBuilder
-  ) {}
-  form = this.fb.group<FilterMask>({
-    name: null,
-    phone: null,
+  form = this.fb.group<FilterMaskForm>({
+    name: this.fb.control(null, [Validators.pattern(/^[a-zA-Z0-9_]+$/)]),
+    phone: this.fb.control<number>(null, [
+      Validators.pattern(/^(\+7|8)?\s?(\(?\d{3}\)?[\s-]?)?[\d\s-]{7,10}$/),
+    ]),
     create_at: null,
-    email: null,
+    email: this.fb.control<string>(null, [
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+    ]),
     is_admin: null,
     status: null,
     update_at: null,
   });
+  get name() {
+    return this.form.controls.name as FormControl;
+  }
+
+  constructor(
+    private commService: CommunicationService,
+    private fb: FormBuilder
+  ) {}
+
   ngOnInit() {}
+
+  trimValue(controlName: string) {
+    const control = this.form.get(controlName);
+    if (control && control.value) {
+      control.setValue(control.value.trim());
+      console.log(control.value);
+    }
+  }
 
   submitForm() {
     const result = {};
@@ -41,8 +61,8 @@ export class FilterComponent {
     if ('update_at' in result && 'create_at' in result) {
       this.commService.say({
         ...result,
-        update_at: this.form.controls.update_at.value?.setHours(0, 0, 0, 0),
-        create_at: this.form.controls.create_at.value?.setHours(0, 0, 0, 0),
+        update_at: this.form.controls.update_at.value?._d?.setHours(0, 0, 0, 0),
+        create_at: this.form.controls.create_at.value?._d?.setHours(0, 0, 0, 0),
       });
       return;
     }
@@ -50,14 +70,14 @@ export class FilterComponent {
     if ('create_at' in result) {
       this.commService.say({
         ...result,
-        create_at: this.form.controls.create_at.value?.setHours(0, 0, 0, 0),
+        create_at: this.form.controls.create_at.value?._d?.setHours(0, 0, 0, 0),
       });
       return;
     }
     if ('update_at' in result) {
       this.commService.say({
         ...result,
-        update_at: this.form.controls.update_at.value?.setHours(0, 0, 0, 0),
+        update_at: this.form.controls.update_at.value?._d?.setHours(0, 0, 0, 0),
       });
       return;
     }

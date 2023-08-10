@@ -8,22 +8,28 @@
 
 h3 {
   color: black;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 20px;
 }
 form {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
 }
-.field-wrap {
+.fields-wrap {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  .item-wrap {
+    display: flex;
+    flex-direction: column;
+  }
   mat-form-field {
     margin-right: 45px;
     width: 294px;
   }
 }
+
 .btn-list {
   display: flex;
   margin-top: 15px;
@@ -36,4 +42,10 @@ form {
     margin-left: 15px;
     color: #ffffff;
   }
+}
+label {
+  font-weight: 700;
+  font-size: 16px;
+  color: black;
+  margin-bottom: 5px;
 }
