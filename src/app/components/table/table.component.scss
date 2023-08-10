@@ -1,6 +1,7 @@
 :host {
   display: block;
-  margin-top: 40px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 .active {
   color: #25b553;
@@ -11,9 +12,11 @@
 
 tr[mat-header-row] {
   background-color: #da2032;
+  font-family: "Moscow Sans", sans-serif;
 
   th {
     color: #ffffff;
+    font-family: "Moscow Sans", sans-serif;
   }
 }
 .ecp-row {

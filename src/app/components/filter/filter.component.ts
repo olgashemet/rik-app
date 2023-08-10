@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import {
-  FilterMask,
-  FilterMaskForm,
-} from 'src/app/interfaces/filter-mask.interface';
+import { FilterMaskForm } from 'src/app/interfaces/filter-mask.interface';
 import { CommunicationService } from 'src/app/services/comm.service';
 
 @Component({
@@ -25,8 +22,17 @@ export class FilterComponent {
     status: null,
     update_at: null,
   });
+
   get name() {
     return this.form.controls.name as FormControl;
+  }
+
+  get phone() {
+    return this.form.controls.phone as FormControl;
+  }
+
+  get email() {
+    return this.form.controls.email as FormControl;
   }
 
   constructor(
@@ -34,7 +40,11 @@ export class FilterComponent {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.name.valueChanges.subscribe((val) => {
+      console.log(this.name.errors);
+    });
+  }
 
   trimValue(controlName: string) {
     const control = this.form.get(controlName);
@@ -43,6 +53,17 @@ export class FilterComponent {
       console.log(control.value);
     }
   }
+  get isAtLeastOneFieldFilled() {
+    const resultArr = [];
+    const controls = this.form.controls;
+    for (const controlName in controls) {
+      resultArr.push(controls[controlName].value);
+    }
+    if (resultArr.includes(false)) {
+      return true;
+    }
+    return !!resultArr.filter((v) => v).length;
+  }
 
   submitForm() {
     const result = {};
@@ -50,11 +71,9 @@ export class FilterComponent {
     for (const controlName in controls) {
       if (
         controls[controlName].value ||
-        typeof controls[controlName].value == 'boolean'
+        controls[controlName].value === false
       ) {
-        typeof controls[controlName].value == 'string'
-          ? (result[controlName] = controls[controlName].value.trim())
-          : (result[controlName] = controls[controlName].value);
+        result[controlName] = controls[controlName].value;
       }
     }
 

@@ -38,9 +38,10 @@ form {
   }
   button {
     background-color: #da2032;
-    font-size: 15px;
+    font-size: 16px;
     margin-left: 15px;
     color: #ffffff;
+    font-family: "Moscow Sans", sans-serif;
   }
 }
 label {
@@ -48,4 +49,7 @@ label {
   font-size: 16px;
   color: black;
   margin-bottom: 5px;
+}
+label.invalid {
+  color: #f44336;
 }

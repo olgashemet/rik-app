@@ -3,7 +3,9 @@
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <div class="fields-wrap">
       <div class="item-wrap">
-        <label for="login">Логин</label>
+        <label for="login" [ngClass]="name.invalid ? 'invalid' : 'valid'"
+          >Логин</label
+        >
         <mat-form-field appearance="outline">
           <input
             matInput
@@ -11,10 +13,15 @@
             id="login"
             (input)="trimValue('name')"
           />
+          <small class="validation" *ngIf="name.dirty && name.errors">
+            Недопустимые символы
+          </small>
         </mat-form-field>
       </div>
       <div class="item-wrap">
-        <label for="phone">Телефон</label>
+        <label for="phone" [ngClass]="phone.invalid ? 'invalid' : 'valid'"
+          >Телефон</label
+        >
         <mat-form-field appearance="outline">
           <input
             matInput
@@ -22,6 +29,9 @@
             id="phone"
             (input)="trimValue('phone')"
           />
+          <small class="validation" *ngIf="phone.dirty && phone.errors">
+            Недопустимые символы
+          </small>
         </mat-form-field>
       </div>
       <div class="item-wrap">
@@ -50,7 +60,9 @@
         </mat-form-field>
       </div>
       <div class="item-wrap">
-        <label for="email">Email</label>
+        <label for="email" [ngClass]="email.invalid ? 'invalid' : 'valid'"
+          >Email</label
+        >
         <mat-form-field appearance="outline">
           <input
             matInput
@@ -58,14 +70,17 @@
             id="email"
             (input)="trimValue('email')"
           />
+          <small class="validation" *ngIf="email.dirty && email.errors">
+            Недопустимые символы
+          </small>
         </mat-form-field>
       </div>
       <div class="item-wrap">
         <label for="role">Роль</label>
         <mat-form-field appearance="outline">
           <mat-select formControlName="is_admin" id="role">
-            <mat-option [value]="true">Admin</mat-option>
-            <mat-option [value]="false">User</mat-option>
+            <mat-option [value]="true">Администратор</mat-option>
+            <mat-option [value]="false">Пользователь</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -87,7 +102,11 @@
       </div>
     </div>
     <div class="btn-list">
-      <button mat-button type="submit" [disabled]="!form.dirty">
+      <button
+        mat-button
+        type="submit"
+        [disabled]="form.invalid || !isAtLeastOneFieldFilled"
+      >
         Применить
       </button>
       <button mat-button (click)="cancel()" type="button">Отмена</button>
