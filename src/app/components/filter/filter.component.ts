@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Actions } from 'src/app/actions/actions-enum';
 import { FilterMaskForm } from 'src/app/interfaces/filter-mask.interface';
-import { CommunicationService } from 'src/app/services/comm.service';
+import { CommunicationService } from 'src/app/services/communication.service';
 
 @Component({
   selector: 'app-filter',
@@ -14,13 +15,13 @@ export class FilterComponent {
     phone: this.fb.control<number>(null, [
       Validators.pattern(/^(\+7|8)?\s?(\(?\d{3}\)?[\s-]?)?[\d\s-]{7,10}$/),
     ]),
-    create_at: null,
+    create_at: this.fb.control(null),
     email: this.fb.control<string>(null, [
       Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
     ]),
-    is_admin: null,
-    status: null,
-    update_at: null,
+    is_admin: this.fb.control(null),
+    status: this.fb.control(null),
+    update_at: this.fb.control(null),
   });
 
   get name() {
@@ -36,15 +37,9 @@ export class FilterComponent {
   }
 
   constructor(
-    private commService: CommunicationService,
+    private communicationService: CommunicationService,
     private fb: FormBuilder
   ) {}
-
-  ngOnInit() {
-    this.name.valueChanges.subscribe((val) => {
-      console.log(this.name.errors);
-    });
-  }
 
   trimValue(controlName: string) {
     const control = this.form.get(controlName);
@@ -78,7 +73,7 @@ export class FilterComponent {
     }
 
     if ('update_at' in result && 'create_at' in result) {
-      this.commService.say({
+      this.communicationService.emit({
         ...result,
         update_at: this.form.controls.update_at.value?._d?.setHours(0, 0, 0, 0),
         create_at: this.form.controls.create_at.value?._d?.setHours(0, 0, 0, 0),
@@ -87,28 +82,28 @@ export class FilterComponent {
     }
 
     if ('create_at' in result) {
-      this.commService.say({
+      this.communicationService.emit({
         ...result,
         create_at: this.form.controls.create_at.value?._d?.setHours(0, 0, 0, 0),
       });
       return;
     }
     if ('update_at' in result) {
-      this.commService.say({
+      this.communicationService.emit({
         ...result,
         update_at: this.form.controls.update_at.value?._d?.setHours(0, 0, 0, 0),
       });
       return;
     }
 
-    this.commService.say({ ...result });
+    this.communicationService.emit({ ...result });
   }
 
   resetForm() {
     this.form.reset();
   }
   cancel() {
-    this.commService.say('cancel');
+    this.communicationService.emit(Actions.Cancel);
     this.form.reset();
   }
 }

@@ -6,12 +6,13 @@ import { FilterMask } from '../interfaces/filter-mask.interface';
   providedIn: 'root',
 })
 export class CommunicationService {
-  private subject: Subject<string | any> = new Subject<string>();
-  constructor() {}
-  public say(message: any) {
+  private subject: Subject<string | FilterMask | any> = new Subject<string>();
+
+  emit(message: string | FilterMask | any) {
     this.subject.next(message);
   }
-  public hear(): Observable<string | FilterMask> {
+
+  getData(): Observable<string | FilterMask | any> {
     return this.subject.asObservable();
   }
 }

@@ -9,12 +9,9 @@ export class FilterService {
     return users.filter((elem) => {
       const propAmount = Object.keys(mask).length;
       let counter = 0;
-      console.log(mask);
       for (const prop in mask) {
         counter++;
         const lastIteration = propAmount == counter;
-
-        console.log(elem[prop], mask[prop]);
         if (elem.hasOwnProperty(prop) && elem[prop] == mask[prop]) {
           if (lastIteration) {
             return true;

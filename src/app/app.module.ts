@@ -26,6 +26,7 @@ import {
   DateAdapter,
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
+import { formatPhoneNumber } from './pipes/format-phone-number.pipe';
 
 export const MY_FORMATS = {
   parse: {
@@ -64,6 +65,7 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     HttpClientModule,
     ReactiveFormsModule,
+    formatPhoneNumber,
   ],
   providers: [
     {

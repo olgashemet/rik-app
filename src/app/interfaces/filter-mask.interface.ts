@@ -13,9 +13,9 @@ export interface FilterMask {
 export interface FilterMaskForm {
   create_at: FormControl;
   email: FormControl<string>;
-  is_admin: boolean;
+  is_admin: FormControl<boolean>;
   name: FormControl<string>;
   phone: FormControl<number>;
-  status: string;
+  status: FormControl<string>;
   update_at: FormControl;
 }

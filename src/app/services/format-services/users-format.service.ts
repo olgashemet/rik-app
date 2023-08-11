@@ -6,20 +6,18 @@ import { UserResponse } from 'src/app/interfaces/users-response.interface';
   providedIn: 'root',
 })
 export class FormatUserService {
-  constructor() {}
-
   formatUsersResponse(userResponse: UserResponse): User[] {
     const updatedUsers = userResponse.users.map((curr) => {
       const withExistingId = userResponse.data.filter(
         (elem) => elem.user_id === curr.id
       );
-      const item1: any = withExistingId.reduce((acc, curr) => {
+      const withAddedProps: any = withExistingId.reduce((acc, curr) => {
         acc['is_admin'] = acc['is_admin'] || curr['is_admin'];
         acc['status'] = acc['status'] || curr['status'];
         acc['is_ecp'] = acc['is_ecp'] || curr['is_ecp'];
         return acc;
       }, {});
-      return { isSelected: false, ...curr, ...item1 };
+      return { isSelected: false, ...curr, ...withAddedProps };
     });
     return this.formatDate(updatedUsers);
   }

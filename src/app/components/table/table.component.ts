@@ -5,7 +5,7 @@ import { filter } from 'rxjs';
 import { TOKEN_KEY } from 'src/app/constants/token.consts';
 import { User } from 'src/app/interfaces/user.interface';
 import { UsersApiService } from 'src/app/services/api-services/users-api.service';
-import { CommunicationService } from 'src/app/services/comm.service';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { FilterService } from 'src/app/services/filter.service';
 
 @Component({
@@ -26,9 +26,10 @@ export class TableComponent {
   ];
   dataSource: MatTableDataSource<any>;
   users: User[];
+
   constructor(
     private usersApiService: UsersApiService,
-    private commService: CommunicationService,
+    private communicationService: CommunicationService,
     private filterService: FilterService
   ) {}
 
@@ -37,6 +38,7 @@ export class TableComponent {
   get isAllSelected() {
     return this.users?.every((elem) => elem.isSelected === true);
   }
+
   toggleAll() {
     return this.isAllSelected
       ? (this.users = this.users.map((elem) => ({
@@ -48,13 +50,15 @@ export class TableComponent {
           isSelected: true,
         })));
   }
+
   toggleItem(id: number) {
     this.users = this.users.map((elem) =>
       elem.id === id ? { ...elem, isSelected: !elem.isSelected } : elem
     );
   }
+
   ngOnInit() {
-    this.commService.hear().subscribe((value) => {
+    this.communicationService.getData().subscribe((value) => {
       console.log(value);
       if (value === 'block') {
         this.users = this.users.map((elem) =>

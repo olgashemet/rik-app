@@ -13,6 +13,7 @@ export class UsersApiService {
     private http: HttpClient,
     private formatUsersService: FormatUserService
   ) {}
+
   getUsers(): Observable<User[]> {
     return this.http
       .get<UserResponse>(
